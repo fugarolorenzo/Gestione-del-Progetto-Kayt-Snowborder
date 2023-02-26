@@ -5,10 +5,9 @@
 #include <cctype>
 #include <math.h>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
-vector<atleta> atleti;
-int righe=0;
 int n;
 
 struct atleta
@@ -22,8 +21,19 @@ struct atleta
     float distanza=0;
 };
 
+
+bool compareAtleta(const atleta& a, const atleta& b) 
+{
+  return a.distanza > b.distanza;
+}
+
+
+
 int main()
 {
+    vector<atleta> atleti;
+    sort(atleti.begin(), atleti.end(), compareAtleta);
+    
     srand(time(NULL));
     int s;
     
@@ -32,9 +42,8 @@ int main()
         cout<<"1 - inserisci atleti"<<endl;
         cout<<"2 - fai partire la gara"<<endl;
         cout<<"3 - crea un file"<<endl;
-        cout<<"4 - Visualizza risultati finali"<<endl;
-        cout<<"5 - Visualizza podio"<<endl;
-        cout<<"6 - Uscita";
+        cout<<"4 - Visualizza podio"<<endl;
+        cout<<"5 - Uscita";
         cout<<endl<<"scegli: ";
         cin>>s;
         
@@ -55,9 +64,14 @@ int main()
                 file();
             }
             break;
+            case 4:{
+                cout<<endl;
+                podio();
+            }
+            break;
             
         }
-                }while(s!=6);
+                }while(s!=5);
     return 0;
 }
 
@@ -137,4 +151,19 @@ void file()
 }
     
     
+}
+
+
+void podio()
+{
+ cout<<"---------------------------PODIO----------------------------"<<endl;
+  for (int i = 0; i < 3; i++)
+  {
+      cout<<i+1 <<" classificato" <<endl;
+      
+        cout<<atleti[i].matricola<<endl;
+        cout<<atleti[i].cognome<<endl;
+        cout<<atleti[i].distanza<<" km"<<endl;
+        cout<<"------------------------------------------------------";
+  }
 }
